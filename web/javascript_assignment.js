@@ -24,13 +24,15 @@ function addFields(event)
     function validateFunction(event) {
         var phoneField = $('#phoneField').val();
 
-        var reg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        //var reg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        var myString = phoneField.substring(0,3) + "-" + phoneField.substring(3,6) + "-" + phoneField.substring(6, 10);
 
-        if (reg.test(phoneField)) {
+        if (myString.test(phoneField)) {
             console.log("OK");
         } else {
             console.log("Bad");
         }
+
     }
 
     var formButton4 = $('#button4');
