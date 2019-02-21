@@ -52,7 +52,21 @@ function showDialogAdd() {
     $('#myModal').modal('show');
 }
 
+function close(){
+    $('#firstName').removeClass("is-invalid");
+    $('#firstName').removeClass("is-valid");
+    $('#lastName').removeClass("is-invalid");
+    $('#lastName').removeClass("is-valid");
+    $('#email').removeClass("is-invalid");
+    $('#email').removeClass("is-valid");
+    $('#phone').removeClass("is-invalid");
+    $('#phone').removeClass("is-valid");
+    $('#birthdate').removeClass("is-invalid");
+    $('#birthdate').removeClass("is-valid");
+}
 function saveChanges() {
+    var jsonObj = {};
+    var jsonString = {};
     var firstNamev1 = $('#firstName').val();
     var firstNameReg = /^[-A-Za-z'\u00C0-\u00FF]{1,45}$/;
     var lastNamev1 = $('#lastName').val();
@@ -66,44 +80,74 @@ function saveChanges() {
 
 
     if (firstNameReg.test(firstNamev1)) {
-        $('#firstName').addClass("is.valid");
+        $('#firstName').removeClass("is-invalid");
+        $('#firstName').addClass("is-valid");
+        jsonObj.firstName = $('#firstName').val();
         console.log("valid");
     } else {
-        $('#firstName').removeClass("is-invalid")
-        console.log("invalid")
+        $('#firstName').addClass("is-invalid");
+        console.log("invalid");
     }
 
     if (lastNameReg.test(lastNamev1)) {
-        $('#lastName').addClass("is.valid");
+        $('#lastName').removeClass("is-invalid");
+        $('#lastName').addClass("is-valid");
+        jsonObj.lastName = $('#lastName').val();
         console.log("valid");
     } else {
-        $('#lastName').removeClass("is-invalid")
+        $('#lastName').addClass("is-invalid")
         console.log("invalid")
     }
 
     if (emailReg.test(emailv1)) {
-        $('#email').addClass("is.valid");
+        $('#email').removeClass("is-invalid");
+        $('#email').addClass("is-valid");
+        jsonObj.email = $('#email').val();
         console.log("valid");
     } else {
-        $('#email').removeClass("is-invalid");
+        $('#email').addClass("is-invalid");
         console.log("invalid")
     }
 
     if (phoneReg.test(phonev1)) {
-        $('#phone').addClass("is.valid");
+        $('#phone').removeClass("is-invalid");
+        $('#phone').addClass("is-valid");
+        jsonObj.phoneField = $('#phoneField').val();
         console.log("valid");
     } else {
-        $('#phone').removeClass("is-invalid");
+        $('#phone').addClass("is-invalid");
         console.log("invalid")
     }
 
     if (birthdateReg.test(birthdatev1)) {
-        $('#birthdate').addClass("is.valid");
+        $('#birthdate').removeClass("is-invalid");
+        $('#birthdate').addClass("is-valid");
+        jsonObj.birthDate = $('#birthdate').val();
         console.log("valid");
     } else {
-        $('#birthdate').removeClass("is-invalid");
+        $('#birthdate').addClass("is-invalid");
         console.log("invalid")
     }
+    jsonString = JSON.stringify(jsonObj);
+    console.log(jsonString);
+}
+
+function jqueryPostJSONButtonAction() {
+
+    var url = "api/name_list_edit";
+    var myFieldValue = $("#id").val();
+    var dataToServer = { fieldname : myFieldValue };
+
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: JSON.stringify(dataToServer),
+        success: function(dataFromServer) {
+            console.log(dataFromServer);
+        },
+        contentType: "application/json",
+        dataType: 'text' // Could be JSON or whatever too
+    });
 }
 
 // Call your code.
@@ -116,3 +160,9 @@ addItemButton.on("click", showDialogAdd);
 
 var saveChangeButton = $('#saveChanges');
 saveChangeButton.on("click", saveChanges);
+
+var jqueryPostJSONButton = $('#saveChanges');
+jqueryPostJSONButton.on("click", jqueryPostJSONButtonAction);
+
+var closeButton = $('#close');
+closeButton.on("click", close);
