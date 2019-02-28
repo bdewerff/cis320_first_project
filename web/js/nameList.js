@@ -20,7 +20,11 @@ function updateTable() {
                 var phone = json_result[i].phone;
                 var birthday = json_result[i].birthday;
 
-                var myPhone = phone.substring(0,3) + "-" + phone.substring(3, 6) + "-" + phone.substring(6,10);
+                var myPhone = "";
+                if (phone != undefined && phone.length == 10){
+                    myPhone = phone.substring(0,3) + "-" + phone.substring(3, 6) + "-" + phone.substring(6,10);
+                }
+
 
                 $('#datatable tr:last').after('<tr><td>' + id + '</td><td>' + first + '</td><td>' + last + '</td><td>'
                     + email + '</td><td>' + myPhone + '</td><td>' + birthday + '</td>');
@@ -82,61 +86,57 @@ function saveChanges() {
     if (firstNameReg.test(firstNamev1)) {
         $('#firstName').removeClass("is-invalid");
         $('#firstName').addClass("is-valid");
-        jsonObj.firstName = $('#firstName').val();
-        console.log("valid");
+        jsonObj.first = $('#firstName').val();
     } else {
         $('#firstName').addClass("is-invalid");
-        console.log("invalid");
     }
 
     if (lastNameReg.test(lastNamev1)) {
         $('#lastName').removeClass("is-invalid");
         $('#lastName').addClass("is-valid");
-        jsonObj.lastName = $('#lastName').val();
-        console.log("valid");
+        jsonObj.last = $('#lastName').val();
     } else {
         $('#lastName').addClass("is-invalid")
-        console.log("invalid")
     }
 
     if (emailReg.test(emailv1)) {
         $('#email').removeClass("is-invalid");
         $('#email').addClass("is-valid");
         jsonObj.email = $('#email').val();
-        console.log("valid");
     } else {
         $('#email').addClass("is-invalid");
-        console.log("invalid")
     }
 
     if (phoneReg.test(phonev1)) {
         $('#phone').removeClass("is-invalid");
         $('#phone').addClass("is-valid");
-        jsonObj.phoneField = $('#phoneField').val();
-        console.log("valid");
+        jsonObj.phone = $('#phone').val();
     } else {
         $('#phone').addClass("is-invalid");
-        console.log("invalid")
     }
 
-    if (birthdateReg.test(birthdatev1)) {
+  /*  if (birthdateReg.test(birthdatev1)) {
         $('#birthdate').removeClass("is-invalid");
         $('#birthdate').addClass("is-valid");
         jsonObj.birthDate = $('#birthdate').val();
-        console.log("valid");
     } else {
         $('#birthdate').addClass("is-invalid");
-        console.log("invalid")
     }
+    */
     jsonString = JSON.stringify(jsonObj);
     console.log(jsonString);
+    $('#myModal').modal('hide');
 }
 
 function jqueryPostJSONButtonAction() {
 
     var url = "api/name_list_edit";
-    var myFieldValue = $("#id").val();
-    var dataToServer = { fieldname : myFieldValue };
+    var first = $("#firstName").val();
+    var last = $("#lastName").val();
+    var email = $("#email").val();
+    var phone = $("#phone").val();
+    var birthday = $("#birthdate").val();
+    var dataToServer = { first : first, last : last, email : email, phone : phone, birthday : birthday };
 
     $.ajax({
         type: 'POST',
