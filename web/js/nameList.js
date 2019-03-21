@@ -27,9 +27,12 @@ function updateTable() {
 
 
                 $('#datatable tr:last').after('<tr><td>' + id + '</td><td>' + first + '</td><td>' + last + '</td><td>'
-                    + email + '</td><td>' + myPhone + '</td><td>' + birthday + '</td>');
+                    + email + '</td><td>' + myPhone + '</td><td>' + birthday + '</td><td><button type=\'button\' name=\'delete\' ' +
+                    'class=\'deleteButton\' onClick=\'window.location.reload()\' value=' + id + '>Delete</button></td>');
             }
+            $(".deleteButton").on("click", jqueryPostDeleteButtonAction);
             console.log("Done");
+
         }
     );
 
@@ -76,12 +79,12 @@ function saveChanges() {
     var lastNamev1 = $('#lastName').val();
     var lastNameReg = /^[-A-Za-z'\u00C0-\u00FF]{1,45}$/;
     var emailv1 = $('#email').val();
-    var emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+    var emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     var phonev1 = $('#phone').val();
     var phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
     var birthdatev1 = $('#birthdate').val();
-    var birthdateReg = /^\d{1,2}\/\d{1,2}\/(19|20)\d{2}$/;
-
+    var birthdateReg = /^\d{4}-\d{1,2}-\d{1,2}$/;
+    var valid = true;
 
     if (firstNameReg.test(firstNamev1)) {
         $('#firstName').removeClass("is-invalid");
@@ -89,6 +92,7 @@ function saveChanges() {
         jsonObj.first = $('#firstName').val();
     } else {
         $('#firstName').addClass("is-invalid");
+        valid = false;
     }
 
     if (lastNameReg.test(lastNamev1)) {
@@ -97,6 +101,7 @@ function saveChanges() {
         jsonObj.last = $('#lastName').val();
     } else {
         $('#lastName').addClass("is-invalid")
+        valid = false;
     }
 
     if (emailReg.test(emailv1)) {
@@ -105,6 +110,7 @@ function saveChanges() {
         jsonObj.email = $('#email').val();
     } else {
         $('#email').addClass("is-invalid");
+        valid = false;
     }
 
     if (phoneReg.test(phonev1)) {
@@ -113,23 +119,31 @@ function saveChanges() {
         jsonObj.phone = $('#phone').val();
     } else {
         $('#phone').addClass("is-invalid");
+        valid = false;
     }
 
-  /*  if (birthdateReg.test(birthdatev1)) {
+    if (birthdateReg.test(birthdatev1)) {
         $('#birthdate').removeClass("is-invalid");
         $('#birthdate').addClass("is-valid");
         jsonObj.birthDate = $('#birthdate').val();
     } else {
         $('#birthdate').addClass("is-invalid");
+        valid = false;
     }
-    */
+
+    if (valid) {
+        jqueryPostJSONButtonAction();
+        $('#myModal').modal('hide');
+    }
+
+    console.log(valid);
     jsonString = JSON.stringify(jsonObj);
     console.log(jsonString);
-    $('#myModal').modal('hide');
+
 }
 
 function jqueryPostJSONButtonAction() {
-
+    console.log("Adding Person");
     var url = "api/name_list_edit";
     var first = $("#firstName").val();
     var last = $("#lastName").val();
@@ -150,6 +164,27 @@ function jqueryPostJSONButtonAction() {
     });
 }
 
+function jqueryPostDeleteButtonAction(id) {
+
+    var url = "api/name_list_delete";
+    console.log("Delete");
+    id = id.target.value;
+    console.log(id);
+    var dataToServer = { id : id };
+
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: JSON.stringify(dataToServer),
+        success: function (dataFromServer) {
+            console.log(dataFromServer);
+        },
+        contentType: "application/json",
+        dataType: 'text'
+    });
+
+}
+
 // Call your code.
 updateTable();
 
@@ -161,8 +196,7 @@ addItemButton.on("click", showDialogAdd);
 var saveChangeButton = $('#saveChanges');
 saveChangeButton.on("click", saveChanges);
 
-var jqueryPostJSONButton = $('#saveChanges');
-jqueryPostJSONButton.on("click", jqueryPostJSONButtonAction);
-
 var closeButton = $('#close');
 closeButton.on("click", close);
+
+
