@@ -23,16 +23,19 @@ function updateTable() {
                 var myPhone = "";
                 if (phone != undefined && phone.length == 10){
                     myPhone = phone.substring(0,3) + "-" + phone.substring(3, 6) + "-" + phone.substring(6,10);
+                } else{
+                    myPhone = phone;
                 }
 
 
                 $('#datatable tr:last').after('<tr><td>' + id + '</td><td>' + first + '</td><td>' + last + '</td><td>'
                     + email + '</td><td>' + myPhone + '</td><td>' + birthday + '</td><td><button type=\'button\' name=\'delete\' ' +
-                    'class=\'deleteButton\' onClick=\'window.location.reload()\' value=' + id + '>Delete</button></td>');
+                    'class=\'deleteButton\' onClick=\'window.location.reload()\' value=' + id + '>Delete</button></td><td><button ' +
+                    'type=\'button\' name =\'edit\' class=\'editButton\' value=' + id + '>Edit</button></td>');
             }
             $(".deleteButton").on("click", jqueryPostDeleteButtonAction);
+            $(".editButton").on("click", editItem)
             console.log("Done");
-
         }
     );
 
@@ -150,14 +153,25 @@ function jqueryPostJSONButtonAction() {
     var email = $("#email").val();
     var phone = $("#phone").val();
     var birthday = $("#birthdate").val();
-    var dataToServer = { first : first, last : last, email : email, phone : phone, birthday : birthday };
+    var finalDataToServer;
+
+    if ($("#id").val() !== "") {
+        console.log("1");
+        var id = $("#id").val();
+        var dataToServer1 = {id: id, first: first, last: last, email: email, phone: phone, birthday: birthday};
+        finalDataToServer = dataToServer1;
+    } else {
+        console.log("2");
+        var dataToServer2 = {first : first, last : last, email : email, phone : phone, birthday : birthday};
+        finalDataToServer = dataToServer2;
+    }
 
     $.ajax({
         type: 'POST',
         url: url,
-        data: JSON.stringify(dataToServer),
-        success: function(dataFromServer) {
-            console.log(dataFromServer);
+        data: JSON.stringify(finalDataToServer),
+        success: function(finalDataFromServer) {
+            console.log(finalDataFromServer);
         },
         contentType: "application/json",
         dataType: 'text' // Could be JSON or whatever too
@@ -183,6 +197,26 @@ function jqueryPostDeleteButtonAction(id) {
         dataType: 'text'
     });
 
+}
+
+function editItem(e) {
+    console.log("Edit");
+    console.log(e.target.value);
+    var id = e.target.value;
+    var firstName = e.target.parentNode.parentNode.querySelectorAll("td")[1].innerHTML;
+    var lastName = e.target.parentNode.parentNode.querySelectorAll("td")[2].innerHTML;
+    var email = e.target.parentNode.parentNode.querySelectorAll("td")[3].innerHTML;
+    var phone = e.target.parentNode.parentNode.querySelectorAll("td")[4].innerHTML;
+    var birthday = e.target.parentNode.parentNode.querySelectorAll("td")[5].innerHTML;
+
+    $('#id').val(id);
+    $('#firstName').val(firstName);
+    $('#lastName').val(lastName);
+    $('#email').val(email);
+    $('#phone').val(phone);
+    $('#birthdate').val(birthday);
+
+    $('#myModal').modal('show');
 }
 
 // Call your code.

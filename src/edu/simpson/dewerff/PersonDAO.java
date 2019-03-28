@@ -159,4 +159,41 @@ public class PersonDAO {
             try { conn.close(); } catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
         }
     }
+
+    public static void editPeople(Person editPerson){
+        log.log(Level.FINE, "Edit People");
+
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            // Get our database connection
+            conn = DBHelper.getConnection();
+
+            // This is a string that is our SQL query.
+            String sql = "UPDATE person SET first=?, last=?, email=?, phone=?, birthday=? WHERE id=?;";
+
+            // Create an object with all the info about our SQL statement to run.
+            stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, editPerson.getFirst());
+            stmt.setString(2, editPerson.getLast());
+            stmt.setString(3, editPerson.getEmail());
+            stmt.setString(4, editPerson.getPhone());
+            stmt.setString(5, editPerson.getBirthday());
+            stmt.setInt(6, editPerson.getId());
+
+            System.out.println(stmt);
+            stmt.executeUpdate();
+
+        } catch (SQLException se) {
+            log.log(Level.SEVERE, "SQL Error", se );
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Error", e );
+        } finally {
+            // Ok, close our result set, statement, and connection
+            try { stmt.close(); } catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
+            try { conn.close(); } catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
+        }
+    }
 }

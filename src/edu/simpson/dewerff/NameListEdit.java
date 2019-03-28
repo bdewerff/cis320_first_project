@@ -52,6 +52,9 @@ public class NameListEdit extends HttpServlet {
             Gson gson = new Gson();
             Person fromJson = gson.fromJson(requestString, Person.class);
 
+            int id = fromJson.getId();
+            System.out.println(id);
+
             String first = request.getParameter("first");
             String last = request.getParameter("last");
             String email = request.getParameter("email");
@@ -103,7 +106,10 @@ public class NameListEdit extends HttpServlet {
             }
 
             out.println(valid);
-            if (valid) {
+            if (valid && id != 0){
+                PersonDAO.editPeople(fromJson);
+                PersonDAO.getPeople();
+            } else if (valid){
                 PersonDAO.addPeople(fromJson);
                 PersonDAO.getPeople();
             }
