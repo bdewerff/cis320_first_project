@@ -1,28 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
 
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity=
             "sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.2.1/cerulean/bootstrap.min.css">
-
-    <title>Index Page</title>
+    <title>Sample Form</title>
 </head>
 
 <body>
+
 <!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Simpson College</a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="login.html">Login</a>
+                <a class="nav-link" href="#">Login</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="javascript_assignment.html">Javascript Assignment</a>
@@ -41,15 +41,32 @@
 </nav>
 
 <div class="container">
-    <h1>Brett Dewerff's Index Page for CIS 320 Work</h1>
-    <p>Hi</p>
+    <h1>Login Demo</h1>
+    <h2>Login</h2>
+
+    <div>
+        <input type="text" id="loginId" placeholder="User Id">
+    </div>
+    <label for="loginJava">Login</label>
+    <button id="loginJava">Go</button><br />
+
+    <h2 class="logOut">Log Out</h2>
+    <button class="logOut" id="logOut">Log Out</button>
+
+    <h2>Welcome!</h2>
+    <!--<label for="getSessionJava">Get login info</label>
+    <button id="getSessionJava">Go</button><br /> -->
+    <pre id="getSessionResult"></pre>.
+
+
+
+    <br />
+
 </div>
 
-<!-- Load JavaScript -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity=
-        "sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity=
-        "sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="js/login.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>

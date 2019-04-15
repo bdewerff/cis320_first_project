@@ -33,8 +33,24 @@
         <url-pattern>/api/name_list_delete</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>GetLoginServlet</servlet-name>
+        <servlet-class>edu.simpson.dewerff.GetLoginServlet</servlet-class>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>GetLoginServlet</servlet-name>
+        <url-pattern>/api/get_login_servlet</url-pattern>
+    </servlet-mapping>
 
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>edu.simpson.dewerff.LoginServlet</servlet-class>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/api/login_servlet</url-pattern>
+    </servlet-mapping>
 
 </web-app>
