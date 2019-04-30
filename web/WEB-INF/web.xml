@@ -53,4 +53,16 @@
         <url-pattern>/api/login_servlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>InvalidateSessionServlet</servlet-name>
+        <servlet-class>edu.simpson.dewerff.InvalidateSessionServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>InvalidateSessionServlet</servlet-name>
+        <url-pattern>/api/invalidate_session_servlet</url-pattern>
+    </servlet-mapping>
+
+
+
 </web-app>
